@@ -1,0 +1,40 @@
+{
+  "scenario_id": "DOC_SHARE_01",
+  "document_id": "DOC-014",
+  "title": "프로젝트 안내문 외부 공유",
+  "document_title": "프로젝트 안내문",
+  "request_title": "프로젝트 안내문 외부 공유 요청",
+  "request_description": [
+    "당신은 회사의 프로젝트 담당자입니다. 외부 협력사에 프로젝트 안내문을 공유하려고 하며, AI 의사결정 지원 시스템이 해당 요청을 검토해 외부 공유 승인을 권고했습니다.",
+    "당신은 AI 추천과 관련 문서 정보를 확인한 후, AI의 권고를 수용하거나 이의를 제기할 수 있습니다."
+  ],
+  "recipient": "외부 협력사 B",
+  "recommendation": "외부 공유 승인을 권고합니다.",
+  "policy": "외부 공유 등급이 ‘허용’이고 담당자 승인이 ‘완료’된 문서만 공유할 수 있습니다.",
+  "evidence_cases": [
+    {
+      "id": "E1",
+      "status": "sufficient",
+      "share_status": "허용",
+      "approval": "완료",
+      "expected_policy_decision": "approve",
+      "reason": "disagree"
+    },
+    {
+      "id": "E2",
+      "status": "contradictory",
+      "share_status": "제한",
+      "approval": "완료",
+      "expected_policy_decision": "reject",
+      "reason": "mismatch"
+    },
+    {
+      "id": "E3",
+      "status": "insufficient",
+      "share_status": "미확인",
+      "approval": "완료",
+      "expected_policy_decision": "hold",
+      "reason": "insufficient"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "friction-research-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "python3 scripts/check_properties.py && node scripts/clean-results.mjs && node scripts/clean-policy-results.mjs && playwright test",
+    "test:legacy": "node scripts/clean-results.mjs && PLAYWRIGHT_REPORT_KIND=legacy playwright test tests/data.spec.ts tests/guards.spec.ts tests/paths.spec.ts tests/screenshots.spec.ts",
+    "test:paths": "node scripts/clean-results.mjs && playwright test tests/paths.spec.ts",
+    "test:guards": "playwright test tests/guards.spec.ts tests/data.spec.ts",
+    "check:properties": "python3 scripts/check_properties.py",
+    "test:policy": "python3 scripts/check_properties.py && node scripts/clean-policy-results.mjs && PLAYWRIGHT_REPORT_KIND=policy playwright test tests/policy_reachability.spec.ts",
+    "analyze": "python3 scripts/analyze_results.py",
+    "analyze:policy": "python3 scripts/analyze_policy.py",
+    "figures": "node scripts/render_figures.mjs",
+    "research:all": "npm run build && python3 scripts/graph_model.py && npm run check:properties && npm run test:legacy && npm run test:policy && npm run analyze && npm run analyze:policy && npm run figures",
+    "test:figures": "playwright test tests/screenshots.spec.ts"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "^5.9.0",
+    "vite": "^7.1.0",
+    "@types/node": "^22.15.0"
+  }
+}
