@@ -1,0 +1,6 @@
+.analytics-consent{max-width:960px;margin:0 auto 24px;padding:14px 18px;border:1px solid #dce5ec;border-radius:10px;background:#fff;color:#40586c;font-size:12px;line-height:1.55}
+.analytics-consent p{margin:0 0 10px}.analytics-consent strong{color:#214a66}
+.analytics-consent-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.analytics-consent-actions span{margin-right:auto;color:#556d80}
+.analytics-consent-actions button{padding:7px 11px;border:1px solid #aebed0;background:#eef3f8;color:#214a66;font-size:12px}
+@media(max-width:600px){.analytics-consent{margin:0 16px 16px}}
