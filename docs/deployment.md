@@ -3,7 +3,7 @@
 ## 버전과 범위
 
 - 연구 기준 버전: `8281475f9885673ef9b9ec2f725497f080686dc8`, annotated tag `research-baseline-20261023`.
-- 배포 브랜치: `deploy/clarity-vercel`. 실제 Clarity 활성화 배포는 기존 소스 커밋 `a152ca3b183f994b0fe3bc915f8c7b524f507e7c`에서 다시 빌드했다. 이후 문서 업데이트 커밋은 배포 코드 변경이 아니다.
+- 배포 브랜치: `deploy/clarity-vercel`. 현재 Production 소스 커밋은 `d58cb069ea36e8cc38c3500371296ea85408b3e1`이다. 이후 문서 업데이트 커밋은 배포 코드 변경이 아니다.
 - 배포 브랜치는 기존 연구 App의 UI 조건, 시나리오 fixture, 상태 전이 및 테스트 기대값을 변경하지 않는다. Clarity 방문 분석은 논문의 Playwright 결과와 별도로 취급한다.
 - 이 사이트는 연구용 프로토타입이며 실제 AI 승인, 문서 공유, 연구 참가자 모집 또는 개인정보 입력 기능이 없다.
 
@@ -14,8 +14,8 @@
 | Vercel 프로젝트 | `yeinchoi/toyproject1-ai-friction` (`prj_wUSuVp00YfkpMpRWwK7TNcsdMr2U`) |
 | Preview URL | https://toyproject1-ai-friction-gh11xur9j-yeinchoi.vercel.app |
 | Production URL | https://toyproject1-ai-friction.vercel.app |
-| Production 소스 커밋 | `a152ca3b183f994b0fe3bc915f8c7b524f507e7c` |
-| Clarity 활성화 Production 배포 | `dpl_BrXNPqjerw5aSgKB3g49S5jUSLsp` (2026-10-23 KST, READY) |
+| Production 소스 커밋 | `d58cb069ea36e8cc38c3500371296ea85408b3e1` |
+| 현재 Production 배포 | `dpl_GHvKcEKKEKwsbsWhk9vUcXRiPrLD` (2026-10-23 KST, READY) |
 
 ## 빌드 및 배포 절차
 
@@ -57,9 +57,9 @@ Vercel CLI에서 두 변수 모두 Production 범위임을 확인했고 Preview 
 
 허용 시 [Microsoft Consent V2](https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-consent-api-v2)에 `ad_Storage: denied`, `analytics_Storage: granted`를 전달한다. 철회 시 두 저장소를 `denied`로 갱신하고 즉시 페이지를 새로고침한다. Clarity는 V2 거부 후에도 쿠키 없는 수집 모드가 가능하므로, 새 문서에서는 스크립트를 재로딩하지 않는 방식으로 후속 수집을 끊는다. 철회 버튼 직후 발생할 수 있는 네트워크 요청까지 실제 서비스에서 0개인지 확인하려면 실제 프로젝트 ID로 Network QA를 해야 한다.
 
-`index.html`의 `#root`에 `data-clarity-mask="True"`를 설정해 [Clarity의 명시적 마스킹](https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-masking)을 적용한다. 프로젝트 대시보드에서도 Settings → Masking을 **Strict**로 설정하고, 공개 전에 Recordings/Network에서 실제 마스킹을 확인한다. 이 앱은 Clarity 커스텀 태그를 전송하지 않는다. 추적 가능한 URL은 루트와 등록된 연구 조건 ID 두 개만 허용한다. 테스트 fixture는 독립 참여자 자료가 아니며 Clarity 방문 분석을 논문 데이터에 자동 합산하지 않는다.
+현재 Clarity 프로젝트의 Settings → Masking 모드는 사용자의 요청에 따라 **Relaxed**다. 이전 배포의 `#root`에 있던 `data-clarity-mask="True"`도 제거했다. [Clarity 공식 문서](https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-masking)에 따르면 Relaxed에서도 입력 상자와 드롭다운 내용은 마스킹된다. 현재 연구 UI는 고정된 사유 선택만 제공하고 개인정보 입력 기능이 없다. 향후 입력 기능을 추가한다면 수집 범위를 다시 검토해야 한다. 이 앱은 Clarity 커스텀 태그를 전송하지 않는다. 추적 가능한 URL은 루트와 등록된 연구 조건 ID 두 개만 허용한다. 테스트 fixture는 독립 참여자 자료가 아니며 Clarity 방문 분석을 논문 데이터에 자동 합산하지 않는다.
 
-방문자에게는 동의 시 방문 화면과 클릭 동작을 Clarity가 분석한다는 안내를 보여준다. 거부·철회는 연구 기능을 막지 않으며, 동의 버튼은 `window.__researchDebug` 이벤트에 기록되지 않는다. 운영 시 실제 사용자 개인정보나 연구 참가자 정보를 입력받는 기능을 추가하지 않는다.
+방문자에게는 동의 시 방문 화면의 텍스트와 클릭 동작을 Clarity가 기록·분석한다는 안내를 보여준다. 거부·철회는 연구 기능을 막지 않으며, 동의 버튼은 `window.__researchDebug` 이벤트에 기록되지 않는다. 운영 시 실제 사용자 개인정보나 연구 참가자 정보를 입력받는 기능을 추가하지 않는다.
 
 ## 검증 기록
 
@@ -72,8 +72,14 @@ Vercel CLI에서 두 변수 모두 Production 범위임을 확인했고 Preview 
 - **실제 Clarity 활성화 배포:** 기존 URL에 `dpl_BrXNPqjerw5aSgKB3g49S5jUSLsp`를 배포했다. 새 브라우저 컨텍스트에서 동의 안내 표시, 동의 전 요청 0, 거부 후 요청 0 및 수용·이의제기 기능 정상 동작을 확인했다. 동의 후 `www.clarity.ms/tag/z216o7ntn0`는 200, 실제 `*.clarity.ms/collect`는 204를 반환했다. 스크립트는 1개이고 Consent V2 허용 호출을 확인했다. Console 및 동일 출처·Clarity Network 실패 0.
 - 철회 시 Consent V2의 두 저장소 거부 호출을 확인했다. 재로딩된 문서에는 Clarity 스크립트가 없었고, 이후 연구 UI 동작에도 추가 Clarity 요청 0이었다. 다시 동의하면 새 스크립트 1개가 로드됐다. 철회 직전 또는 진행 중인 요청까지 취소했다는 뜻은 아니다.
 - 활성화 후 `npm run research:all`: 기본 Playwright 36/36, 정책 12/12 통과. 모델의 E2/E3 정책 불일치 수용 반례 8개는 유지됐다. Production의 새 방문자 동의 전 상태에서도 12개 직접 URL·연구 경로 QA 통과, Clarity 요청 0, Console/동일 출처 Network 오류 0.
-- Clarity 대시보드 마스킹 모드는 처음에 Balanced였다. 2026-10-23 KST에 **Strict**로 변경했고 다시 연 설정에서 선택 상태를 확인했다. 사이트 `#root`의 `data-clarity-mask="True"`도 실제 Production DOM에서 확인했다. 대시보드는 변경 적용에 최대 1시간이 걸릴 수 있다고 안내한다.
+- Clarity 대시보드 마스킹 모드는 처음에 Balanced였고 STEP 4-2에서 Strict로 설정해 재생 마스킹을 확인했다. 이후 사용자의 Relaxed 요청 시 프로젝트 설정은 이미 **Relaxed**로 선택돼 있었다. Clarity 마스킹 변경은 최대 1시간이 걸릴 수 있고 기존 녹화에 소급되지 않는다고 대시보드가 안내한다.
 - Clarity의 **라이브 레코딩** 목록에 `HeadlessChrome` 테스트 방문 3건이 나타났다. U4/E2 세션 하나를 재생해 연구 화면 텍스트가 점으로 마스킹된 것을 확인했다. 따라서 테스트 세션의 데이터 수신·라이브 재생·화면 텍스트 마스킹은 확인됐다. 일반 레코딩 목록에는 아직 결과가 없고 요약 대시보드 탭은 비활성이라, 처리 완료된 세션 목록과 대시보드 지표는 미확인이다. `1명의 실제 사용자`는 사용자 수가 아니라 라이브 레코딩 보기 전환 버튼으로 확인됐다.
+- **마스킹 해제 배포:** `index.html`의 명시적 전체 마스킹 속성을 제거하고 동의 안내를 텍스트 기록에 맞게 고쳤다. Preview `dpl_6vkPw51Xm9FtPrgaXyxCikLND414`에서 빌드, 12개 연구 조건 및 Clarity 비활성 QA가 통과했다. Production `dpl_GHvKcEKKEKwsbsWhk9vUcXRiPrLD`에서 `#root` 마스킹 속성 없음, 동의 안내 표시, 동의 전·거부 후 요청 0, 허용 시 실제 수집 204, 철회 후 추가 요청 0, 재동의 가능, Console/Network 오류 0을 확인했다. Production 12개 연구 조건 QA도 통과했다.
+- 새 Production 방문의 **라이브 레코딩**을 재생해 연구 화면 제목, 완료 문구 및 동의 안내 텍스트가 마스킹 없이 보이는 것을 확인했다. 이는 이전 Strict 상태에서 수집된 녹화와 구분한다.
+
+## 히트맵 위치
+
+Clarity 프로젝트 상단의 **열 지도(Heatmaps)** 탭에서 페이지별 클릭·스크롤 지도를 볼 수 있다. 현재 프로젝트 UI에서는 이 탭이 비활성이다. [Microsoft의 문제 해결 안내](https://learn.microsoft.com/en-us/clarity/heatmaps/troubleshooting-heatmaps)는 새 설치 후 클릭 데이터가 지도에 나타나기까지 약 30분을 기다리고, 올바른 URL·기간·필터를 확인하도록 안내한다. 탭 활성화 후 `https://toyproject1-ai-friction.vercel.app/` 또는 원하는 `?ui=U…&evidence=E…` 조건 URL을 선택해 확인한다. 이 히트맵은 동의한 방문자의 Clarity 데이터이며 기존 Playwright 연구 결과와 별개다.
 
 ## 발견한 문제와 처리
 
