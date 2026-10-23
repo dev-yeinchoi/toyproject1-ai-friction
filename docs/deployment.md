@@ -3,7 +3,7 @@
 ## 버전과 범위
 
 - 연구 기준 버전: `8281475f9885673ef9b9ec2f725497f080686dc8`, annotated tag `research-baseline-20261023`.
-- 배포 브랜치: `deploy/clarity-vercel`. 실제 Preview 및 Production 배포 SHA와 URL은 배포 후 이 문서에 기록한다.
+- 배포 브랜치: `deploy/clarity-vercel`. Production은 이 문서가 포함된 브랜치 HEAD에서 빌드한다. 정확한 SHA는 최종 배포 기록 및 Vercel deployment metadata로 확인한다.
 - 배포 브랜치는 기존 연구 App의 UI 조건, 시나리오 fixture, 상태 전이 및 테스트 기대값을 변경하지 않는다. Clarity 방문 분석은 논문의 Playwright 결과와 별도로 취급한다.
 - 이 사이트는 연구용 프로토타입이며 실제 AI 승인, 문서 공유, 연구 참가자 모집 또는 개인정보 입력 기능이 없다.
 
@@ -12,9 +12,9 @@
 | 항목 | 값 |
 | --- | --- |
 | Vercel 프로젝트 | `yeinchoi/toyproject1-ai-friction` (`prj_wUSuVp00YfkpMpRWwK7TNcsdMr2U`) |
-| Preview URL | 배포 후 기록 예정 |
-| Production URL | 배포 후 기록 예정 |
-| Production 커밋 | 배포 후 기록 예정 |
+| Preview URL | https://toyproject1-ai-friction-gh11xur9j-yeinchoi.vercel.app |
+| Production URL | https://toyproject1-ai-friction.vercel.app |
+| Production 커밋 | 이 문서가 포함된 `deploy/clarity-vercel` HEAD. 최종 SHA는 배포 기록에서 확인 |
 
 ## 빌드 및 배포 절차
 
@@ -66,13 +66,16 @@ Vite의 `VITE_` 변수는 브라우저 번들에 포함된다. Clarity 프로젝
 - 로컬 비활성 빌드: 12개 조건 직접 URL, 대시보드, 수용·이의제기, 근거 표시, 사유 가드, 검토, 완료·새로고침·주소 가드, 1280px/390px 기본 표시 통과. Clarity 요청 0, Console/동일 출처 Network 오류 0.
 - 가상 Production 빌드(시험용 `qaonly` ID와 가로챈 가짜 스크립트): 동의 전 요청 0, 거부 후 요청 0, 허용 시 Consent V2 호출과 스크립트 요청 확인, 철회 후 새 문서에서 추가 요청 0. 동의 클릭은 연구 이벤트 로그에 기록되지 않음. 실제 Microsoft 서비스 검증은 아님.
 - 가상 Preview 빌드: ID와 활성화 값을 넣어도 Clarity 요청 0이며 12개 조건 QA 통과.
-- 실제 Vercel Preview/Production 및 Clarity Dashboard: 배포·프로젝트 ID 확보 후 기록 예정.
+- Vercel Preview: 12개 직접 URL, 대시보드, 수용·이의제기, 사유 및 검토 가드, 완료·새로고침·주소 가드, 1280px/390px 기본 표시 통과. Clarity 요청 0, Console/동일 출처 Network 오류 0.
+- 첫 Vercel 배포는 플랫폼 동작에 따라 자동으로 Production에 지정되었다. 이 공개 URL에서도 위 12개 조합 QA가 통과했다. 최종 문서 커밋을 기준으로 Production을 다시 배포한다.
+- 실제 Clarity Dashboard: 프로젝트 ID가 아직 없어 확인하지 못함.
 
 ## 발견한 문제와 처리
 
 - 연구 기준 버전에는 배포용 `.git` 브랜치가 없었으므로 별도 worktree에서 `deploy/clarity-vercel`을 생성했다. `main`과 baseline tag는 보존한다.
 - Clarity V2의 단순 거부는 쿠키 없는 추적을 계속할 수 있어, 로딩 전 동의 게이트와 철회 후 새로고침을 함께 사용한다.
 - Vercel CLI 65.2.0의 기기 로그인을 완료하고 `yeinchoi` 범위에 전용 프로젝트를 생성했다. Framework는 Vite, Build `npm run build`, Install `npm ci`, Output `dist`, Node 24.x로 설정했다.
+- 전용 프로젝트의 Preview URL은 기본 SSO 보호가 걸려 브라우저 QA에 접근할 수 없었다. 프로젝트 전체 보호 해제는 처음에 자동 승인 검토에서 거절됐고, 사용자가 범위를 명시적으로 승인한 뒤 SSO를 해제했다. 이 프로젝트의 Preview와 Production URL은 공개 접근이 가능하다.
 
 ## 공식 문서
 
